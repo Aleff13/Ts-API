@@ -2,7 +2,7 @@ import Item from "../models/item";
 import database from "./db";
 
 const itensRepository = {
-    lerTodos: (callback: (itens: Item[]) => void) => {
+    getAll: (callback: (itens: Item[]) => void) => {
         const sql = 'SELECT * FROM itens limit 10';
         const params: any[] = []
         database.all(sql, params, (err, rows) => callback(rows))

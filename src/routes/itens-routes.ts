@@ -11,7 +11,7 @@ itensRouter.get('/doc', (req, res) => {
 })
 
 itensRouter.get('/itens', (req, res) => {
-    itensRepository.lerTodos((itens) => res.status(200).json(itens))
+    itensRepository.getAll((itens) => res.status(200).json(itens))
 })
 
 itensRouter.get('/item/:id', (req, res) => {
