@@ -1,4 +1,5 @@
 import express from 'express';
+import { redisClient } from '../../redisConfig';
 import Item from '../models/item';
 import itensRepository from '../repositories/itens-repository';
 
@@ -11,8 +12,25 @@ itensRouter.get('/doc', (req, res) => {
 })
 
 itensRouter.get('/itens', (req, res) => {
-    itensRepository.getAll((itens) => res.status(200).json(itens))
-})
+    
+    console.time('Com cache')
+    redisClient.get('getAll').then((itensFromCache) => {
+        if(itensFromCache != null){  
+            let cacheItens = JSON.parse(itensFromCache)
+            res.status(200).json(cacheItens)
+            console.timeEnd('Com cache')
+            return
+        }
+        console.time('Sem cache')
+        itensRepository.getAll((itens) => {
+    
+            redisClient.set('getAll', JSON.stringify(itens))
+    
+            res.status(200).json(itens)
+            console.timeEnd('Sem cache')
+            })
+        })
+    })
 
 itensRouter.get('/item/:id', (req, res) => {
     const id: number = +req.params.id
@@ -25,6 +43,7 @@ itensRouter.delete('/item/:id', (req, res) => {
 })
 
 itensRouter.post('/itens', (req, res) => {
+    console.time()
     const itens: Item[] = req.body
     itens.forEach(item => {
         if (!item.nome || !item.descricao || !item.preco) {
@@ -34,6 +53,7 @@ itensRouter.post('/itens', (req, res) => {
             console.log(id)
         })
     })
+    console.timeEnd()
     res.status(201).json(itens)
 })
 

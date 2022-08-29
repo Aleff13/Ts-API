@@ -3,7 +3,7 @@ import database from "./db";
 
 const itensRepository = {
     getAll: (callback: (itens: Item[]) => void) => {
-        const sql = 'SELECT * FROM itens limit 10';
+        const sql = 'SELECT * FROM itens';
         const params: any[] = []
         database.all(sql, params, (err, rows) => callback(rows))
     },
