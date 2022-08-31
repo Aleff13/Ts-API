@@ -8,7 +8,7 @@ const SQL_ITENS_CREATE = `
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT,
         descricao TEXT,
-        preco INTEGER
+        preco TEXT
     )
 `
 

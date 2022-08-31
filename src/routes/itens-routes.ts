@@ -1,5 +1,6 @@
+import axios from 'axios';
 import express from 'express';
-import { redisClient } from '../../redisConfig';
+import { getSavedXMLElement, redisClient, saveXMLElement } from '../../redisConfig';
 import Item from '../models/item';
 import itensRepository from '../repositories/itens-repository';
 
@@ -66,5 +67,28 @@ itensRouter.put('/itens', (req, res) => {
     })
     res.status(200).json(itens)
 })
+
+itensRouter.get('/convertItens', (req, res) => {
+    getSavedXMLElement().then((xml) => {
+        res.status(200).send(xml)
+    })
+})
+
+itensRouter.post('/convertItens', (req, res) => {
+    itensRepository.getAllForXML((itens) => {
+        const url = `http://${process.env.HOSTNAME}:${process.env.CONVERTPORT}/api/convert/`
+        const data = JSON.parse(JSON.stringify(itens))
+
+        axios.post(url, data)
+          .then((response) => {
+            saveXMLElement(response.data)
+            res.json('Successfully converted')
+          })
+          .catch((error) => {
+
+            res.status(500).json(error)
+          });
+        })
+    })
 
 export default itensRouter

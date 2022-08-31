@@ -3,4 +3,12 @@ import { promisify } from "util";
 
 const redisClient = new Redis();
 
-export { redisClient }
+const saveXMLElement = (xml: XMLDocument) => {
+    redisClient.set('getAllXml', xml.toString())
+}
+
+const getSavedXMLElement = () => {
+    return redisClient.get('getAllXml')
+}
+
+export { redisClient, saveXMLElement, getSavedXMLElement }

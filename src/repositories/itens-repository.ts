@@ -8,6 +8,12 @@ const itensRepository = {
         database.all(sql, params, (err, rows) => callback(rows))
     },
 
+    getAllForXML: (callback: (itens: Item[]) => void) => {
+        const sql = 'SELECT NOME, DESCRICAO, PRECO FROM itens limit 100';
+        const params: any[] = []
+        database.all(sql, params, (err, rows: any) => callback(rows))
+    },
+
     createItem: (item: Item, callback: (id?: number) => void) => {
         const sql = 'INSERT INTO itens (nome, descricao, preco) VALUES (?, ?, ?)'
         const params = [item.nome, item.descricao, item.preco]
