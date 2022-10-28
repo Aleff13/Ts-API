@@ -1,36 +1,36 @@
-import Item from "../models/item";
+import Capsule from "../models/Capsule";
 import database from "./db";
 
 const itensRepository = {
-    getAll: (callback: (itens: Item[]) => void) => {
-        const sql = 'SELECT * FROM itens limit 10';
+    getAll: (callback: (itens: Capsule[]) => void) => {
+        const sql = 'SELECT * FROM capsule limit 10';
         const params: any[] = []
         database.all(sql, params, (err, rows) => callback(rows))
     },
 
-    createItem: (item: Item, callback: (id?: number) => void) => {
-        const sql = 'INSERT INTO itens (nome, descricao, preco) VALUES (?, ?, ?)'
-        const params = [item.nome, item.descricao, item.preco]
+    createItem: (item: Capsule, callback: (id?: number) => void) => {
+        const sql = 'INSERT INTO capsule (title, description, time) VALUES (?, ?, ?)'
+        const params = [item.title, item.description, item.time]
         database.run(sql, params, function (err){
             callback(this?.lastID)
         })
     },
 
-    findById: (id: number, callback: (item: Item) => void) => {
-        const sql = 'SELECT * FROM itens WHERE id = ?'
+    findById: (id: number, callback: (item: Capsule) => void) => {
+        const sql = 'SELECT * FROM capsule WHERE id = ?'
         const params = [id]
         database.get(sql, params, (err, row) => callback(row))
     },
 
     deleteById: (id: number, callback: (err: any) => void) => {
-        const sql = 'DELETE FROM itens WHERE id = ?'
+        const sql = 'DELETE FROM capsule WHERE id = ?'
         const params = [id]
         database.run(sql, params, (err) => callback(err))
     },
 
-    updateById: (item: Item, callback: (id?: number) => void) => {
-        const sql = 'UPDATE itens SET nome = ?, descricao = ?, preco = ? WHERE id = ? '
-        const params = [item.nome, item.descricao, item.preco, item.id]
+    updateById: (item: Capsule, callback: (id?: number) => void) => {
+        const sql = 'UPDATE capsule SET title = ?, description = ?, time = ? WHERE id = ? '
+        const params = [item.title, item.description, item.time, item.id]
         database.run(sql, params, function (err){
             callback(this?.lastID)
         })

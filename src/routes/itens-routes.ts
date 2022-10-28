@@ -1,5 +1,5 @@
 import express from 'express';
-import Item from '../models/item';
+import Capsule from '../models/Capsule';
 import itensRepository from '../repositories/itens-repository';
 
 const itensRouter = express.Router();
@@ -10,31 +10,31 @@ itensRouter.get('/doc', (req, res) => {
         )
 })
 
-itensRouter.get('/itens', (req, res) => {
+itensRouter.get('/capsule', (req, res) => {
     itensRepository.getAll((itens) => res.status(200).json(itens))
 })
 
-itensRouter.get('/item/:id', (req, res) => {
+itensRouter.get('/capsule/:id', (req, res) => {
     const id: number = +req.params.id
     itensRepository.findById(id, (item) => {
     
-    // if(!item){
-    //     res.status(404).json()
-    //     return;
-    // }
+    if(!item){
+        res.status(404).json()
+        return;
+    }
     
     res.status(200).json(item)})
 })
 
-itensRouter.delete('/item/:id', (req, res) => {
+itensRouter.delete('/capsule/:id', (req, res) => {
     const id: number = +req.params.id
     itensRepository.deleteById(id, (item) => res.status(204).send(item))
 })
 
-itensRouter.post('/itens', (req, res) => {
-    const itens: Item[] = req.body
+itensRouter.post('/capsule', (req, res) => {
+    const itens: Capsule[] = req.body
     itens.forEach(item => {
-        if (!item.nome || !item.descricao || !item.preco) {
+        if (!item.title || !item.description || !item.time) {
             return
         }
         itensRepository.createItem(item, (id) => {
@@ -44,8 +44,8 @@ itensRouter.post('/itens', (req, res) => {
     res.status(201).json(itens)
 })
 
-itensRouter.put('/itens', (req, res) => {
-    const itens: Item[] = req.body
+itensRouter.put('/capsule', (req, res) => {
+    const itens: Capsule[] = req.body
     itens.forEach(item => {
         itensRepository.updateById(item, (id) => {
             console.log(id)
