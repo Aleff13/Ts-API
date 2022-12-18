@@ -1,15 +1,12 @@
 import express from 'express'
 import cors from 'cors'
-import itensRouter from './routes/itens-routes'
-import database from './repositories/db'
+import booksRouter from './routes/routes'
 
 // Porta do servidor
 const PORT = process.env.PORT || 4000
 
 // Host do servidor
 const HOSTNAME = process.env.HOSTNAME || 'http://localhost'
-
-const db = database;
 
 // App Express
 const app = express()
@@ -29,7 +26,7 @@ app.use(cors({
 }))
 
 //Rotas
-app.use('/api/', itensRouter)
+app.use('/api/', booksRouter)
 
 // Resposta padrão para quaisquer outras requisições:
 app.use((req, res) => {
