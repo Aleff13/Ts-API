@@ -23,8 +23,8 @@ Install dependencies
 POST - `localhost:4000/api/book`
 ```
     {
-    "title": "1889",
-    "author": "Laurentino Gomes"
+    "title": "titulo",
+    "author": "autor "
     }
 ```
 
