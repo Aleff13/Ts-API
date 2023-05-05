@@ -10,7 +10,7 @@ itensRouter.get('/doc', (req, res) => {
         )
 })
 
-itensRouter.get('/itens', (req, res) => {
+itensRouter.get('/items', (req, res) => {
     itensRepository.getAll((itens) => res.status(200).json(itens))
 })
 
@@ -31,7 +31,7 @@ itensRouter.delete('/item/:id', (req, res) => {
     itensRepository.deleteById(id, (item) => res.status(204).send(item))
 })
 
-itensRouter.post('/itens', (req, res) => {
+itensRouter.post('/items', (req, res) => {
     const itens: Item[] = req.body
     itens.forEach(item => {
         if (!item.nome || !item.descricao || !item.preco) {
@@ -44,7 +44,7 @@ itensRouter.post('/itens', (req, res) => {
     res.status(201).json(itens)
 })
 
-itensRouter.put('/itens', (req, res) => {
+itensRouter.put('/items', (req, res) => {
     const itens: Item[] = req.body
     itens.forEach(item => {
         itensRepository.updateById(item, (id) => {

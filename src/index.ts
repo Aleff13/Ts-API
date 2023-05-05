@@ -23,10 +23,10 @@ app.get('/', (req, res) => {
     res.send('Bem-vindo!')
 })
 
-// Cors
-app.use(cors({
-    origin: ['http://localhost:3000']
-}))
+// // Cors
+// app.use(cors({
+//     origin: ['http://localhost:3000']
+// }))
 
 //Rotas
 app.use('/api/', itensRouter)
