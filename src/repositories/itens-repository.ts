@@ -5,7 +5,7 @@ const itensRepository = {
     getAll: (callback: (itens: Item[]) => void) => {
         const sql = 'SELECT * FROM itens limit 10';
         const params: any[] = []
-        database.all(sql, params, (err, rows) => callback(rows))
+        database.all(sql, params, (err, rows: any) => callback(rows))
     },
 
     createItem: (item: Item, callback: (id?: number) => void) => {
@@ -19,7 +19,7 @@ const itensRepository = {
     findById: (id: number, callback: (item: Item) => void) => {
         const sql = 'SELECT * FROM itens WHERE id = ?'
         const params = [id]
-        database.get(sql, params, (err, row) => callback(row))
+        database.get(sql, params, (err, row: any) => callback(row))
     },
 
     deleteById: (id: number, callback: (err: any) => void) => {

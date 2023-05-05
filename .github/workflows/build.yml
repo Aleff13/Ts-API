@@ -1,0 +1,14 @@
+on: push
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - run: node --version
+      - run: npm --version
+    
+      - name: setup-api
+        run: npm install
+
+      - name: run-api
+        run: npm run start
