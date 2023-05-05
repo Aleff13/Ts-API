@@ -6,9 +6,7 @@ jobs:
     steps:
       - run: node --version
       - run: npm --version
-    
-      - name: setup-api
-        run: npm install
 
-      - name: run-api
-        run: npm run start
+      - uses: actions/checkout@v3
+      - run: npm install
+      - run: npm run start
